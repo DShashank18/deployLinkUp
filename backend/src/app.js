@@ -11,7 +11,7 @@ const server = createServer(app);
 
 // Configure CORS for Express
 const corsOptions = {
-    origin: ['https://deploylinkup2.onrender.com', 'http://localhost:3000'], // Add your frontend URLs
+    origin: ['https://deploylinkup-2.onrender.com', 'http://localhost:3000'], // Add your frontend URLs
     methods: 'GET, POST, PUT, DELETE',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -31,7 +31,7 @@ app.use("/api/v1/meetings", meetingRoutes);
 // Configure Socket.IO
 const io = connectToSocket(server, {
     cors: {
-        origin: 'https://deploylinkup2.onrender.com',
+        origin: 'https://deploylinkup-2.onrender.com',
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true
