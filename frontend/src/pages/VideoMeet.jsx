@@ -444,6 +444,7 @@ export default function VideoMeetComponent() {
     let handleScreen = () => {
     // setScreen(!screen);
     // setIsScreenSharing(!screen);
+    console.log("handleScreen triggered, screen =", screen);
     if (!screen) {
             // Start screen sharing
             startScreenShare();
@@ -457,78 +458,78 @@ export default function VideoMeetComponent() {
             exitFullScreen(); // Exit full screen when sharing stops
         }
     }
-    // // Mock start screen share function
-    // const startScreenShare = () => {
-    //     console.log('Screen sharing started');
-    //     // Add your actual screen sharing logic here
-    // };
+    // Mock start screen share function
+    const startScreenShare = () => {
+        console.log('Screen sharing started');
+        // Add your actual screen sharing logic here
+    };
 
-    // // Mock stop screen share function
-    // const stopScreenShare = () => {
-    //     console.log('Screen sharing stopped');
-    //     // Add your actual stop screen sharing logic here
-    // };
+    // Mock stop screen share function
+    const stopScreenShare = () => {
+        console.log('Screen sharing stopped');
+        // Add your actual stop screen sharing logic here
+    };
     // Start screen share function
-const startScreenShare = async () => {
-    try {
-        // Request to get the display media (screen)
-        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+// const startScreenShare = async () => {
+//     try {
+//         // Request to get the display media (screen)
+//         const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
 
-        // Set the screen stream to the local video reference
-        localVideoref.current.srcObject = screenStream;
+//         // Set the screen stream to the local video reference
+//         localVideoref.current.srcObject = screenStream;
 
-        // Add the screen stream to all peer connections
-        for (let id in connections) {
-            if (id === socketIdRef.current) continue;
+//         // Add the screen stream to all peer connections
+//         for (let id in connections) {
+//             if (id === socketIdRef.current) continue;
 
-            // Add the screen stream to the connection
-            connections[id].addStream(screenStream);
+//             // Add the screen stream to the connection
+//             connections[id].addStream(screenStream);
 
-            // Create an offer and send it to the other user
-            connections[id].createOffer().then((description) => {
-                connections[id].setLocalDescription(description).then(() => {
-                    socketRef.current.emit('signal', id, JSON.stringify({ 'sdp': connections[id].localDescription }));
-                }).catch(e => console.log(e));
-            }).catch(e => console.log(e));
-        }
+//             // Create an offer and send it to the other user
+//             connections[id].createOffer().then((description) => {
+//                 connections[id].setLocalDescription(description).then(() => {
+//                     socketRef.current.emit('signal', id, JSON.stringify({ 'sdp': connections[id].localDescription }));
+//                 }).catch(e => console.log(e));
+//             }).catch(e => console.log(e));
+//         }
 
-        // Handle track ending event
-        screenStream.getVideoTracks()[0].onended = () => {
-            stopScreenShare(); // Stop screen sharing if the track ends
-        };
+//         // Handle track ending event
+//         screenStream.getVideoTracks()[0].onended = () => {
+//             stopScreenShare(); // Stop screen sharing if the track ends
+//         };
 
-        setIsScreenSharing(true); // Update the state to indicate screen sharing is active
-    } catch (error) {
-        console.error("Error starting screen share:", error);
-    }
-};
+//         setIsScreenSharing(true); // Update the state to indicate screen sharing is active
+//     } catch (error) {
+//         console.error("Error starting screen share:", error);
+//     }
+// };
 
-// Stop screen share function
-const stopScreenShare = () => {
-    // Stop all tracks in the screen stream
-    const tracks = localVideoref.current.srcObject.getTracks();
-    tracks.forEach(track => track.stop());
+// // Stop screen share function
+// const stopScreenShare = () => {
+//     // Stop all tracks in the screen stream
+//     const tracks = localVideoref.current.srcObject.getTracks();
+//     tracks.forEach(track => track.stop());
 
-    // Reset the video source to the local stream
-    if (window.localStream) {
-        localVideoref.current.srcObject = window.localStream;
-    }
+//     // Reset the video source to the local stream
+//     if (window.localStream) {
+//         localVideoref.current.srcObject = window.localStream;
+//     }
 
-    // Notify all peers that screen sharing has stopped
-    for (let id in connections) {
-        if (id === socketIdRef.current) continue;
+//     // Notify all peers that screen sharing has stopped
+//     for (let id in connections) {
+//         if (id === socketIdRef.current) continue;
 
-        // Create an offer to reset the connection
-        connections[id].addStream(window.localStream);
-        connections[id].createOffer().then((description) => {
-            connections[id].setLocalDescription(description).then(() => {
-                socketRef.current.emit('signal', id, JSON.stringify({ 'sdp': connections[id].localDescription }));
-            }).catch(e => console.log(e));
-        }).catch(e => console.log(e));
-    }
+//         // Create an offer to reset the connection
+//         connections[id].addStream(window.localStream);
+//         connections[id].createOffer().then((description) => {
+//             connections[id].setLocalDescription(description).then(() => {
+//                 socketRef.current.emit('signal', id, JSON.stringify({ 'sdp': connections[id].localDescription }));
+//             }).catch(e => console.log(e));
+//         }).catch(e => console.log(e));
+//     }
 
-    setIsScreenSharing(false); // Update the state to indicate screen sharing is stopped
-};
+//     setIsScreenSharing(false); // Update the state to indicate screen sharing is stopped
+// };
 
     let handleEndCall = () => {
         try {
