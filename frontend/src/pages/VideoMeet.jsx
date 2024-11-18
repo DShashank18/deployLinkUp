@@ -449,12 +449,14 @@ export default function VideoMeetComponent() {
             // Start screen sharing
             startScreenShare();
             setScreen(true);
+            setIsScreenSharing(true);
             enterFullScreen(document.documentElement); // Enter full screen when sharing starts
         } 
     else {
             // Stop screen sharing
             stopScreenShare();
             setScreen(false);
+            setIsScreenSharing(false);
             exitFullScreen(); // Exit full screen when sharing stops
         }
     }
