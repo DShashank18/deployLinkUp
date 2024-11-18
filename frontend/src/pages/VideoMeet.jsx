@@ -38,7 +38,7 @@ export default function VideoMeetComponent() {
 
     let [audio, setAudio] = useState();
 
-    let [screen, setScreen] = useState(false);
+    let [screen, setScreen] = useState();
 
     let [isScreenSharing, setIsScreenSharing] = useState(false);
 
@@ -444,19 +444,21 @@ export default function VideoMeetComponent() {
     let handleScreen = () => {
     // setScreen(!screen);
     // setIsScreenSharing(!screen);
+    setScreen(!screen);
+    setIsScreenSharing(!screen);
     console.log("handleScreen triggered, screen =", screen);
     if (!screen) {
             // Start screen sharing
             startScreenShare();
-            setScreen(true);
-            setIsScreenSharing(true);
+            // setScreen(true);
+            // setIsScreenSharing(true);
             enterFullScreen(document.documentElement); // Enter full screen when sharing starts
         } 
     else {
             // Stop screen sharing
             stopScreenShare();
-            setScreen(false);
-            setIsScreenSharing(false);
+            // setScreen(false);
+            // setIsScreenSharing(false);
             exitFullScreen(); // Exit full screen when sharing stops
         }
     }
