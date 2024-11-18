@@ -65,6 +65,31 @@ export default function VideoMeetComponent() {
 
 
     // }
+    // Full-screen function
+    const enterFullScreen = (element) => {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { // Firefox
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { // IE/Edge
+            element.msRequestFullscreen();
+        }
+    };
+
+    // Exit full-screen function
+    const exitFullScreen = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    };
 
     useEffect(() => {
         console.log("HELLO")
@@ -399,9 +424,32 @@ export default function VideoMeetComponent() {
         }
     }, [screen])
     let handleScreen = () => {
-    setScreen(!screen);
-    setIsScreenSharing(!screen);
-}
+    // setScreen(!screen);
+    // setIsScreenSharing(!screen);
+    if (!screen) {
+            // Start screen sharing
+            startScreenShare();
+            setScreen(true);
+            enterFullScreen(document.documentElement); // Enter full screen when sharing starts
+        } 
+    else {
+            // Stop screen sharing
+            stopScreenShare();
+            setScreen(false);
+            exitFullScreen(); // Exit full screen when sharing stops
+        }
+    }
+    // Mock start screen share function
+    const startScreenShare = () => {
+        console.log('Screen sharing started');
+        // Add your actual screen sharing logic here
+    };
+
+    // Mock stop screen share function
+    const stopScreenShare = () => {
+        console.log('Screen sharing stopped');
+        // Add your actual stop screen sharing logic here
+    };
 
     let handleEndCall = () => {
         try {
