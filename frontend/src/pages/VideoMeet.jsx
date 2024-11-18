@@ -38,7 +38,7 @@ export default function VideoMeetComponent() {
 
     let [audio, setAudio] = useState();
 
-    let [screen, setScreen] = useState();
+    let [screen, setScreen] = useState(false);
 
     let [isScreenSharing, setIsScreenSharing] = useState(false);
 
@@ -448,7 +448,7 @@ export default function VideoMeetComponent() {
     setIsScreenSharing(!screen);
     console.log("handleScreen triggered, screen =", screen);
     console.log("isScreenSharing =", isScreenSharing);
-    if (isScreenSharing) {
+    if (!screen) {
             // Start screen sharing
             startScreenShare();
             // setScreen(true);
