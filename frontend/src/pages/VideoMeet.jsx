@@ -448,7 +448,7 @@ export default function VideoMeetComponent() {
     setIsScreenSharing(!screen);
     console.log("handleScreen triggered, screen =", screen);
     console.log("isScreenSharing =", isScreenSharing);
-    if (!isScreenSharing) {
+    if (isScreenSharing) {
             // Start screen sharing
             startScreenShare();
             // setScreen(true);
