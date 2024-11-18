@@ -66,17 +66,35 @@ export default function VideoMeetComponent() {
 
     // }
     // Full-screen function
+    // const enterFullScreen = (element) => {
+    //     if (element.requestFullscreen) {
+    //         element.requestFullscreen();
+    //     } else if (element.mozRequestFullScreen) { // Firefox
+    //         element.mozRequestFullScreen();
+    //     } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    //         element.webkitRequestFullscreen();
+    //     } else if (element.msRequestFullscreen) { // IE/Edge
+    //         element.msRequestFullscreen();
+    //     }
+    // };
     const enterFullScreen = (element) => {
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) { // Firefox
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) { // IE/Edge
-            element.msRequestFullscreen();
-        }
-    };
+    if (!element) {
+        console.error("Invalid element passed to enterFullScreen");
+        return;
+    }
+    if (element.requestFullscreen) {
+        element.requestFullscreen().catch((err) => console.error("Error entering fullscreen:", err));
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else {
+        console.error("Fullscreen API is not supported by this browser.");
+    }
+};
+
 
     // Exit full-screen function
     const exitFullScreen = () => {
