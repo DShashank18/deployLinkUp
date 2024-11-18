@@ -9,7 +9,7 @@ let timeOnline = {};
 export const connectToSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "https://deploy-1-dxg9.onrender.com",
+      origin: "https://deploylinkup3.onrender.com",
       methods: ["GET", "POST"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
